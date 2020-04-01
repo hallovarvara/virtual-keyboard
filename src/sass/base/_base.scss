@@ -1,0 +1,19 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font: 1.6rem "Verdana", sans-serif;
+  background-color: $light;
+}
+
+p {
+  @extend %container;
+  max-width: 670px;
+
+  text-align: center;
+
+  font-size: 1.2rem;
+  line-height: 1.9rem;
+  color: lighten($dark, 25%);
+}

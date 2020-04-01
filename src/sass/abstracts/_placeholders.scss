@@ -1,0 +1,9 @@
+%borderRadius {
+  border-radius: $borderRadius;
+}
+
+%container {
+  box-sizing: border-box;
+  margin: 30px auto;
+  width: 90%;
+}

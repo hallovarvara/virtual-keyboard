@@ -2,21 +2,21 @@ const LAYOUT = {};
 LAYOUT.english = {
   general: [
     ['§', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', 'del'],
+    ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'],
     ['capslock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '&#39;', '&#92;', 'enter'],
     ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '&#47;', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   capsLockPressed: [
     ['§', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', 'del'],
+    ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']'],
     ['capslock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '&#39;', '&#92;', 'enter'],
     ['shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '&#47;', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   shiftPressed: [
     ['§', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace'],
-    ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', 'del'],
+    ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}'],
     ['capslock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '|', 'enter'],
     ['shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
@@ -26,28 +26,28 @@ LAYOUT.english = {
 LAYOUT.russian = {
   general: [
     ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'del'],
+    ['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
     ['capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', '&#92;', 'enter'],
     ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   capsLockPressed: [
     ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', 'del'],
+    ['tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
     ['capslock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '&#92;', 'enter'],
     ['shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   shiftPressed: [
     ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'backspace'],
-    ['tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', 'del'],
+    ['tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
     ['capslock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '&#47;', 'enter'],
     ['shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
 };
 
-const SPECIAL_KEYS = ['tab', 'backspace', 'del', 'capslock',
+const SPECIAL_KEYS = ['tab', 'backspace', 'capslock',
   'enter', 'shift', 'ctrl', 'alt', 'cmd', 'space',
   '&uarr;', '&larr;', '&darr;', '&rarr;'];
 
@@ -133,9 +133,17 @@ class Keyboard {
         this.activateButton(event.target);
         this.deactivateButton(event.target);
 
-        if (!this.checkIfSpecial(event.target.innerText)) {
-          output.value += event.target.innerText;
+        const key = event.target.innerText;
+        let changed = output.value;
+        if (!this.checkIfSpecial(key)) { changed += key; }
+        else if (key === 'tab') { changed += '\t'; }
+        else if (key === 'enter') { changed += '\n'; }
+        else if (key === 'space') { changed += ' '; }
+        else if (key === 'backspace') {
+          changed = changed.slice(0, -1);
         }
+
+        output.value = changed;
       }
       output.focus();
     });

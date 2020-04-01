@@ -1,5 +1,3 @@
-// TODO: написать где-нибудь, что это раскладка Ильи Бирмана
-// TODO: и как переключать раскладку
 const LAYOUT = {};
 LAYOUT.english = {
   general: [
@@ -64,6 +62,7 @@ class Keyboard {
   constructor() {
     this.layout = LAYOUT;
     this.language = language;
+    this.specialKeys = SPECIAL_KEYS;
     return this.createKeyboard();
   }
 
@@ -73,7 +72,8 @@ class Keyboard {
     const currentLayout = this.layout[language].general;
     this.createButtonsRows(currentLayout, keyboard);
     this.nameDoubledButtons(keyboard);
-    this.addButtonsAnimation(keyboard);
+    this.addClickActions(keyboard);
+    this.addMouseActions(keyboard);
     return keyboard;
   }
 
@@ -90,27 +90,29 @@ class Keyboard {
     arrayRow.forEach((text) => {
       const btn = document.createElement('button');
       btn.innerHTML = text;
-      this.checkIfSpecialKey(text, btn);
+      this.markSpecialKeys(text, btn);
       nodesRow.append(btn);
     });
     return this;
   }
 
-  checkIfSpecialKey(text, btn) {
-    SPECIAL_KEYS.forEach((specialKey) => {
-      if (text === specialKey) {
-        switch (text) {
-          case '&uarr;':
-          case '&larr;':
-          case '&darr;':
-          case '&rarr;':
-            btn.classList.add('arrow'); break;
-          default:
-            btn.classList.add(text);
-        }
+  checkIfSpecial(key) {
+    return this.specialKeys.indexOf(key) !== -1;
+  }
+
+  markSpecialKeys(key, btn) {
+    if (this.checkIfSpecial(key)) {
+      switch (key) {
+        case '&uarr;':
+        case '&larr;':
+        case '&darr;':
+        case '&rarr;':
+          btn.classList.add('arrow'); break;
+        default:
+          btn.classList.add(key);
       }
-    });
-    return this;
+    }
+    return btn;
   }
 
   nameDoubledButtons(keyboard) {
@@ -123,16 +125,44 @@ class Keyboard {
     return this;
   }
 
-  addButtonsAnimation(keyboard) {
+  addClickActions(keyboard) {
     keyboard.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON'
-          && !event.target.classList.contains('active')) {
-        event.target.classList.add('active');
-        setTimeout(() => {
-          event.target.classList.remove('active');
-        }, 350);
+      const output = document.querySelector('textarea');
+
+      if (event.target.tagName === 'BUTTON') {
+        this.activateButton(event.target);
+        this.deactivateButton(event.target);
+
+        if (!this.checkIfSpecial(event.target.innerText)) {
+          output.value += event.target.innerText;
+        }
+      }
+      output.focus();
+    });
+    return this;
+  }
+
+  addMouseActions(keyboard) {
+    keyboard.addEventListener('mousedown', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+        this.activateButton(event.target);
       }
     });
+    keyboard.addEventListener('mouseup', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+        this.deactivateButton(event.target);
+      }
+    });
+    return this;
+  }
+
+  activateButton(key) {
+    key.classList.add('active');
+    return this;
+  }
+
+  deactivateButton(key) {
+    setTimeout(() => { key.classList.remove('active'); }, 250);
     return this;
   }
 }

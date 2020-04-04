@@ -15,7 +15,7 @@ LAYOUT.english = {
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   shiftPressed: [
-    ['§', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace'],
+    ['± ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace'],
     ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}'],
     ['capslock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '|', 'enter'],
     ['shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '&uarr;', 'shift'],
@@ -109,10 +109,13 @@ class Keyboard {
     if (this.checkIfSpecial(key)) {
       switch (key) {
         case '&uarr;':
-        case '&larr;':
+          btn.classList.add('arrow', 'arrow__up'); break;
         case '&darr;':
+          btn.classList.add('arrow', 'arrow__down'); break;
+        case '&larr;':
+          btn.classList.add('arrow', 'arrow__left'); break;
         case '&rarr;':
-          btn.classList.add('arrow'); break;
+          btn.classList.add('arrow', 'arrow__right'); break;
         default:
           btn.classList.add(key);
       }
@@ -132,18 +135,24 @@ class Keyboard {
 
   addRealKeyboardActions() {
     document.addEventListener('keydown', (realKey) => {
-      let key = realKey.key.toLocaleLowerCase();
       const { code } = realKey;
+      let key = realKey.key.toLocaleLowerCase();
+      if (code === 'Space') key = 'space';
       if (key === 'control') key = 'ctrl';
       if (key === 'command') key = 'cmd';
-      // if (key === ('→' || '←')) key = 'arrow'; // TODO add unique classes to arrows
+      if (key === 'meta') key = (code === 'MetaRight') ? 'cmd__right' : 'cmd__left';
+      if (key === 'alt') key = (code === 'AltRight') ? 'alt__right' : 'alt__left';
+      if (key === 'arrowup') key = 'arrow__up';
+      if (key === 'arrowdown') key = 'arrow__down';
+      if (key === 'arrowleft') key = 'arrow__left';
+      if (key === 'arrowright') key = 'arrow__right';
       if (key === 'shift') {
         key = (code === 'ShiftRight') ? 'shift__right' : 'shift__left';
         this.switchShift(key);
       } else if (key === 'capslock') {
         this.switchCapslock();
       } else {
-        const downKey = Array.from(document.querySelectorAll('button')).find((e) => e.textContent === key || e.classList.contains(key));
+        const downKey = Array.from(document.querySelectorAll('button')).find((e) => e.textContent.toLowerCase() === key || e.classList.contains(key));
         if (downKey !== undefined) {
           this.activateButton(downKey);
           this.deactivateButton(downKey);
@@ -254,9 +263,7 @@ window.onload = () => {
   // Add hint & textarea to document
   document.querySelector('body').append(hint, textarea);
   textarea.focus();
-  textarea.addEventListener('blur', () => {
-    textarea.focus();
-  });
+  textarea.addEventListener('blur', () => textarea.focus());
 
   // Create and add keyboard to document
   const keyboard = new Keyboard();

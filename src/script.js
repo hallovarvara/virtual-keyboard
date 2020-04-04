@@ -7,13 +7,6 @@ LAYOUT.english = {
     ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '&#47;', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
-  capslockPressed: [
-    ['§', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']'],
-    ['capslock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '&#39;', '&#92;', 'enter'],
-    ['shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '&#47;', '&uarr;', 'shift'],
-    ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
-  ],
   shiftPressed: [
     ['± ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace'],
     ['tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}'],
@@ -29,13 +22,6 @@ LAYOUT.russian = {
     ['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
     ['capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', '&#92;', 'enter'],
     ['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&uarr;', 'shift'],
-    ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
-  ],
-  capslockPressed: [
-    ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
-    ['tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
-    ['capslock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '&#92;', 'enter'],
-    ['shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', '&uarr;', 'shift'],
     ['ctrl', 'alt', 'cmd', 'space', 'cmd', '&larr;', '&darr;', '&rarr;', 'alt'],
   ],
   shiftPressed: [
@@ -66,11 +52,13 @@ class Keyboard {
     return this.createKeyboard();
   }
 
-  createKeyboard(layoutType = 'general') {
+  createKeyboard(layoutType = 'general', layoutArray = false) {
     const keyboard = document.createElement('div');
     keyboard.classList.add('keyboard');
 
-    const currentLayout = this.layout[this.language][layoutType];
+    const currentLayout = (!layoutArray) ? this.layout[this.language][layoutType] : layoutArray;
+    // const currentLayout = this.layout[this.language][layoutType];
+
     this.createButtonsRows(currentLayout, keyboard);
     this.nameDoubledButtons(keyboard);
     this.addClickActions(keyboard);
@@ -137,6 +125,7 @@ class Keyboard {
     document.addEventListener('keydown', (realKey) => {
       const { code } = realKey;
       let key = realKey.key.toLocaleLowerCase();
+      console.log(key);
       if (code === 'Space') key = 'space';
       if (key === 'control') key = 'ctrl';
       if (key === 'command') key = 'cmd';
@@ -205,12 +194,14 @@ class Keyboard {
   }
 
   switchCapslock() {
+    const { general } = this.layout[this.language];
+    const layout = general.map((row) => row.map((k) => ((k.length === 1) ? k.toUpperCase() : k)));
     if (this.capslockPressed) {
       this.createKeyboard();
       this.deactivateButton(document.querySelector('.capslock'));
       this.capslockPressed = false;
     } else {
-      this.createKeyboard('capslockPressed');
+      this.createKeyboard('', layout);
       this.activateButton(document.querySelector('.capslock'));
       this.capslockPressed = true;
     }

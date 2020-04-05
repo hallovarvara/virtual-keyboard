@@ -6,6 +6,6 @@ module.exports = {
     "node": true
   },
   "rules" : {
-    "import/extensions": false,
+    "import/extensions": 0,
   }
 }

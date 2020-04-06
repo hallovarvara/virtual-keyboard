@@ -72,4 +72,3 @@ https://www.youtube.com/watch?v=1wefQGlnPis&feature=youtu.be
 - [Keycode](https://keycode.info)
 - [Клавиатура](https://learn.javascript.ru/keyboard-events)
 - [eslint (eslint-config-airbnb-base)](https://eslint.org/)
-

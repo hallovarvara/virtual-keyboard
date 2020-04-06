@@ -4,7 +4,7 @@
   @extend %container;
   height: 200px;
 
-  font: 2.2rem "Courier", "Courier New", monospace;
+  font: 2.2rem "Courier New", "Courier", monospace;
   
   background-color: white;
   @extend %borderRadius;
@@ -16,4 +16,12 @@
 
 .text:focus {
   outline: none;
+}
+
+@media (min-width: 1024px) {
+  .text {
+    max-width: $container-max-width;
+
+    border-radius: $max-borderRadius;
+  }
 }

@@ -125,7 +125,7 @@ export default [
   }, {
     code: 'AltLeft', isSpecial: true, name: 'alt', classes: 'alt alt__left', row: 4, place: 1,
   }, {
-    code: 'MetaLeft', isSpecial: true, name: 'cmd', classes: 'cmd cmd__left', row: 4, place: 2, // TODO: обработчик на event.key='Meta'
+    code: 'MetaLeft', isSpecial: true, name: 'cmd', classes: 'cmd cmd__left', row: 4, place: 2,
   }, {
     code: 'Space', isSpecial: true, name: 'space', classes: 'space', changeWith: (value) => `${value} `, row: 4, place: 3,
   }, {

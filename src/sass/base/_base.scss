@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font: 1.6rem "Verdana", sans-serif;
+  @include font();
   background-color: $light;
 }
 
@@ -15,5 +15,5 @@ p {
 
   font-size: 1.2rem;
   line-height: 1.9rem;
-  color: lighten($dark, 25%);
+  color: color.adjust($dark, $lightness: 25%);
 }

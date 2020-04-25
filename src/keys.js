@@ -27,12 +27,12 @@ export default [
   }, {
     code: 'Equal', en: '=', enShift: '+', ru: '=', ruShift: '+', row: 0, place: 12,
   }, {
-    code: 'Backspace', isSpecial: true, name: 'backspace', classes: 'backspace', changeWith: (value) => value.slice(0, -1), row: 0, place: 13,
+    code: 'Backspace', isSpecial: true, name: 'backspace', classes: 'backspace', row: 0, place: 13,
   },
 
   // 2nd row
   {
-    code: 'Tab', isSpecial: true, name: 'tab', classes: 'tab', changeWith: (value) => `${value}\t`, row: 1, place: 0,
+    code: 'Tab', isSpecial: true, name: 'tab', classes: 'tab', row: 1, place: 0,
   }, {
     code: 'KeyQ', en: 'q', enShift: 'Q', ru: 'й', ruShift: 'Й', row: 1, place: 1,
   }, {
@@ -87,12 +87,12 @@ export default [
   }, {
     code: 'Backslash', en: '\\', enShift: '|', ru: '\\', ruShift: '/', row: 2, place: 12,
   }, {
-    code: 'Enter', isSpecial: true, name: 'enter', classes: 'enter', changeWith: (value) => `${value}\n`, row: 2, place: 13,
+    code: 'Enter', isSpecial: true, name: 'enter', classes: 'enter', row: 2, place: 13,
   },
 
   // 4th row
   {
-    code: 'ShiftLeft', isSpecial: true, name: 'shift', classes: 'shift shift__left', row: 3, place: 0,
+    code: 'ShiftLeft', isSpecial: true, name: 'shift', classes: 'shift shift_left', row: 3, place: 0,
   }, {
     code: 'KeyZ', en: 'z', enShift: 'Z', ru: 'я', ruShift: 'Я', row: 3, place: 1,
   }, {
@@ -114,29 +114,29 @@ export default [
   }, {
     code: 'Slash', en: '/', enShift: '?', ru: '.', ruShift: ',', row: 3, place: 10,
   }, {
-    code: 'ArrowUp', en: '↑', enShift: '↑', ru: '↑', ruShift: '↑', classes: 'arrow arrow__up', row: 3, place: 11,
+    code: 'ArrowUp', en: '↑', enShift: '↑', ru: '↑', ruShift: '↑', classes: 'arrow arrow_up', row: 3, place: 11,
   }, {
-    code: 'ShiftRight', isSpecial: true, name: 'shift', classes: 'shift shift__right', row: 3, place: 12,
+    code: 'ShiftRight', isSpecial: true, name: 'shift', classes: 'shift shift_right', row: 3, place: 12,
   },
 
   // 5th row
   {
-    code: 'ControlLeft', isSpecial: true, name: 'ctrl', classes: 'ctrl ctrl__left', row: 4, place: 0,
+    code: 'ControlLeft', isSpecial: true, name: 'ctrl', classes: 'ctrl ctrl_left', row: 4, place: 0,
   }, {
-    code: 'AltLeft', isSpecial: true, name: 'alt', classes: 'alt alt__left', row: 4, place: 1,
+    code: 'AltLeft', isSpecial: true, name: 'alt', classes: 'alt alt_left', row: 4, place: 1,
   }, {
-    code: 'MetaLeft', isSpecial: true, name: 'cmd', classes: 'cmd cmd__left', row: 4, place: 2,
+    code: 'MetaLeft', isSpecial: true, name: 'cmd', classes: 'cmd cmd_left', row: 4, place: 2,
   }, {
-    code: 'Space', isSpecial: true, name: 'space', classes: 'space', changeWith: (value) => `${value} `, row: 4, place: 3,
+    code: 'Space', isSpecial: true, name: 'space', classes: 'space', row: 4, place: 3,
   }, {
-    code: 'MetaRight', isSpecial: true, name: 'cmd', classes: 'cmd cmd__right', row: 4, place: 4,
+    code: 'MetaRight', isSpecial: true, name: 'cmd', classes: 'cmd cmd_right', row: 4, place: 4,
   }, {
-    code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←', classes: 'arrow arrow__left', row: 4, place: 5,
+    code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←', classes: 'arrow arrow_left', row: 4, place: 5,
   }, {
-    code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓', classes: 'arrow arrow__down', row: 4, place: 6,
+    code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓', classes: 'arrow arrow_down', row: 4, place: 6,
   }, {
-    code: 'ArrowRight', en: '→', enShift: '→', ru: '→', ruShift: '→', classes: 'arrow arrow__right', row: 4, place: 7,
+    code: 'ArrowRight', en: '→', enShift: '→', ru: '→', ruShift: '→', classes: 'arrow arrow_right', row: 4, place: 7,
   }, {
-    code: 'AltRight', isSpecial: true, name: 'alt', classes: 'alt alt__right', row: 4, place: 8,
+    code: 'AltRight', isSpecial: true, name: 'alt', classes: 'alt alt_right', row: 4, place: 8,
   },
 ];

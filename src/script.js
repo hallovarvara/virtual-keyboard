@@ -1,231 +1,66 @@
 import KEYS from './keys.js';
+import Keyboard from './modules/Keyboard.js';
 
 window.onload = () => {
+  // Add comment, how to use app and how it was made
   const hint = document.createElement('p');
   hint.innerHTML = '<strong>Сменить раскладку: left Ctrl + left Shift</strong>. Сделано на&nbsp;Mac&nbsp;OS, расположение кнопок может отличаться от&nbsp;компьютера с&nbsp;Windows (например, Cmd заменяет Win, нет клавиши Del). Если на&nbsp;Windows что-то не&nbsp;работает, пожалуйста, напишите мне в&nbsp;телеграм <strong>hallovarvara</strong> или дискорд <strong>Varya Dev. (@hallovarvara)</strong>';
+  document.body.append(hint);
 
+  // Add textarea for to output symbols
   const textarea = document.createElement('textarea');
   textarea.classList.add('text');
+  document.body.append(textarea);
 
-  document.querySelector('body').append(hint, textarea);
-
+  // Add keyboard container
   const keyboardView = document.createElement('div');
   keyboardView.classList.add('keyboard');
   document.body.append(keyboardView);
 
-  class Keyboard {
-    constructor(keys) {
-      this.language = this.getLanguage();
-      this.keys = keys;
-      this.capslockPressed = false;
-      this.shiftPressed = false;
-      this.ctrlPressed = false;
-      this.createKeyboard();
+  // Create keyboard
+  const keyboard = new Keyboard(KEYS, keyboardView);
+
+  // What's happening if mouse button'is pressed or released
+  const pressMouseButton = (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      keyboard.changeState(event.target.dataset.keyCode, event.type);
+      textarea.value = keyboard.type(event.target, textarea.value);
     }
+  };
 
-    createKeyboard() {
-      let currentRow;
-      this.keys.forEach((key) => {
-        if (currentRow !== key.row) {
-          const row = document.createElement('div');
-          row.classList.add('keyboard__row');
-          keyboardView.append(row);
-          currentRow = key.row;
-        }
-        const button = document.createElement('button');
-        button.id = key.code;
-        button.classList = (key.classes !== undefined) ? key.classes : '';
-        button.innerHTML = (key.isSpecial) ? key.name : key[this.language];
+  const releaseMouseButton = (event) => {
+    const code = (event.target.dataset.keyCode) ? event.target.dataset.keyCode : '';
+    keyboard.changeState(code, event.type);
+  };
 
-        keyboardView.querySelectorAll('.keyboard__row')[currentRow].append(button);
-      });
-    }
+  // Catch if mouse button's pressed or released
+  keyboardView.addEventListener('mousedown', pressMouseButton);
+  document.addEventListener('click', releaseMouseButton);
+  // document's using because button can be released when cursor's outside the keyboard area
 
-    updateButtons() {
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach((button) => {
-        const data = this.getButtonInfo(button);
-        if (!data.isSpecial) {
-          let updated = button.innerHTML;
-
-          if (this.shiftPressed) updated = data[`${this.language}Shift`];
-          else if (this.capslockPressed) updated = data[this.language].toUpperCase();
-          else updated = data[this.language];
-
-          document.querySelector(`#${data.code}`).innerHTML = updated;
-        }
-      });
-    }
-
-    setLanguage(language = this.language) {
-      localStorage.setItem('language', language);
-      return this;
-    }
-
-    getLanguage() {
-      let currentLanguage = 'en';
-      if (localStorage.getItem('language') === null) {
-        this.setLanguage(currentLanguage);
-      } else {
-        currentLanguage = localStorage.getItem('language');
-      }
-      return currentLanguage;
-    }
-
-    switchLanguage() {
-      if (this.shiftPressed && this.ctrlPressed) {
-        this.language = (this.language === 'en') ? 'ru' : 'en';
-        this.setLanguage(this.language);
-      }
-    }
-
-    switchShift(shift) {
-      if (shift.id === 'ShiftRight' || shift.id === 'ShiftLeft') {
-        this.shiftPressed = !this.shiftPressed;
-        this.updateButtons();
-      }
-    }
-
-    switchCapslock(capslock) {
-      if (capslock.id === 'CapsLock') {
-        this.capslockPressed = !this.capslockPressed;
-        this.updateButtons();
-      }
-    }
-
-    getButtonInfo(button) {
-      return this.keys.filter((key) => key.code === button.id)[0];
-    }
-
-    updateTextarea(button) {
-      const btn = this.getButtonInfo(button);
-
-      let newValue = textarea.value;
-      if (btn.isSpecial) {
-        newValue = (btn.changeWith !== undefined) ? btn.changeWith(newValue) : newValue;
-      } else if (this.shiftPressed) {
-        newValue += btn[`${this.language}Shift`];
-      } else if (this.capslockPressed) {
-        newValue += btn[this.language].toUpperCase();
-      } else {
-        newValue += btn[this.language];
-      }
-      textarea.value = newValue;
-    }
-
-    activateButton(code) {
-      if (keyboardView.querySelector(`#${code}`) !== null) {
-        keyboardView.querySelector(`#${code}`).classList.add('active');
-      }
-      return this;
-    }
-
-    deactivateButton(code) {
-      if (keyboardView.querySelector(`#${code}`) !== null) {
-        setTimeout(() => {
-          keyboardView.querySelector(`#${code}`).classList.remove('active');
-        }, 100);
-      }
-      return this;
-    }
-
-    deactivateAllButtons() {
-      const activated = keyboardView.querySelectorAll('.active');
-      activated.forEach((button) => {
-        if (button.id !== 'CapsLock' && button.id !== 'ShiftRight' && button.id !== 'ShiftLeft') {
-          this.deactivateButton(button.id);
-        }
-      });
-    }
-  }
-
-  const keyboard = new Keyboard(KEYS);
-
-  const isButton = (element) => element.tagName === 'BUTTON';
-
-  document.addEventListener('mousedown', (event) => {
-    if (isButton(event.target)) {
-      if (event.target.id !== 'CapsLock') {
-        keyboard.activateButton(event.target.id);
-        keyboard.updateTextarea(event.target);
-      }
-      keyboard.switchShift(event.target);
-
-      if (event.target.id === 'ControlLeft') {
-        keyboard.ctrlPressed = true;
-      }
-
-      keyboard.switchLanguage();
-    }
-  });
-
-  document.addEventListener('mouseup', (event) => {
-    if (isButton(event.target)) {
-      if (event.target.id !== 'CapsLock') {
-        keyboard.deactivateButton(event.target.id);
-      }
-      keyboard.switchShift(event.target);
-
-      if (event.target.id === 'ControlLeft') {
-        keyboard.ctrlPressed = false;
-      }
-    }
-  });
-
-  document.addEventListener('click', (event) => {
-    keyboard.deactivateAllButtons();
-    keyboard.switchCapslock(event.target);
-
-    if (event.target.id === 'CapsLock') {
-      if (event.target.classList.contains('active')) {
-        keyboard.deactivateButton(event.target.id);
-      } else {
-        keyboard.activateButton(event.target.id);
-      }
-    }
-  });
-
-  document.addEventListener('keydown', (event) => {
+  // What's happening if computer buttons're pressed or released
+  const pressComputerKey = (event) => {
     event.preventDefault();
+    const virtualKey = keyboard.view.querySelector(`[data-key-code="${event.code}"]`);
 
-    const virtualButton = document.querySelector(`#${event.code}`);
-    keyboard.updateTextarea(virtualButton);
-
-    keyboard.activateButton(event.code);
-
-    keyboard.switchShift(virtualButton);
-
-    if (event.code === 'CapsLock') {
-      keyboard.switchCapslock(virtualButton);
+    if (virtualKey) {
+      keyboard.changeState(event.code, event.type);
+      if (event.type === 'keydown') textarea.value = keyboard.type(virtualKey, textarea.value);
     }
+  };
 
-    if (event.code === 'ControlLeft') {
-      keyboard.ctrlPressed = true;
-    }
+  // Catch if computer buttons're pressed or released
+  document.addEventListener('keydown', pressComputerKey);
+  document.addEventListener('keyup', pressComputerKey);
 
-    keyboard.switchLanguage();
-  });
-
-  document.addEventListener('keyup', (event) => {
-    const virtualButton = document.querySelector(`#${event.code}`);
-
-    keyboard.switchShift(virtualButton);
-
-    if (event.code === 'CapsLock') {
-      keyboard.switchCapslock(virtualButton);
-      keyboard.deactivateButton(event.code);
-    } else if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-      keyboard.deactivateAllButtons();
-      keyboard.deactivateButton(event.code);
-    } else {
-      keyboard.deactivateAllButtons();
-    }
-
-    if (event.code === 'ControlLeft') {
-      keyboard.ctrlPressed = false;
-    }
-  });
-
+  // Focus on textarea
   textarea.focus();
   textarea.addEventListener('blur', () => textarea.focus());
+
+  // Inactivate all buttons (except CapsLock), when focus got out of page and returned back
+  window.addEventListener('blur', () => {
+    if (keyboard.pressed.includes('CapsLock')) keyboard.pressed = ['CapsLock'];
+    else keyboard.pressed = [];
+    keyboard.activateKeys();
+  });
 };

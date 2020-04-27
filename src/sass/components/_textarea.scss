@@ -4,21 +4,21 @@
   @extend %container;
   height: 200px;
 
-  font: 2.2rem "Courier New", "Courier", monospace;
+  @include font($size: 2.2rem, $family: $font-textarea);
   
   background-color: white;
   @extend %borderRadius;
-  border: 5px solid #FFDB6B;
-  outline: none;
+  border: 5px solid $textarea-border;
 
   resize: none;
+
+  &,
+  &:focus {
+    outline: none;
+  }
 }
 
-.text:focus {
-  outline: none;
-}
-
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-desktop) {
   .text {
     max-width: $container-max-width;
 

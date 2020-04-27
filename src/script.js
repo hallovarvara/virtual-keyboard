@@ -20,21 +20,28 @@ window.onload = () => {
   // Create keyboard
   const keyboard = new Keyboard(KEYS, keyboardView);
 
-  // Catch if mouse button's pressed
-  keyboardView.addEventListener('mousedown', (event) => {
+  // What's happening if mouse button'is pressed or released
+  const pressMouseButton = (event) => {
     if (event.target.tagName === 'BUTTON') {
-      keyboard.changeState(event.target.id, event.type);
+      keyboard.changeState(event.target.dataset.keyCode, event.type);
       textarea.value = keyboard.type(event.target, textarea.value);
     }
-  });
+  };
 
-  // Catch if mouse button's released
-  document.addEventListener('click', (event) => keyboard.changeState(event.target.id, event.type));
+  const releaseMouseButton = (event) => {
+    const code = (event.target.dataset.keyCode) ? event.target.dataset.keyCode : '';
+    keyboard.changeState(code, event.type);
+  };
+
+  // Catch if mouse button's pressed or released
+  keyboardView.addEventListener('mousedown', pressMouseButton);
+  document.addEventListener('click', releaseMouseButton);
+  // document's using because button can be released when cursor's outside the keyboard area
 
   // What's happening if computer buttons're pressed or released
   const pressComputerKey = (event) => {
     event.preventDefault();
-    const virtualKey = keyboard.view.querySelector(`#${event.code}`);
+    const virtualKey = keyboard.view.querySelector(`[data-key-code="${event.code}"]`);
 
     if (virtualKey) {
       keyboard.changeState(event.code, event.type);

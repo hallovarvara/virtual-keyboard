@@ -20,7 +20,7 @@ export default class {
         currentRow = key.row;
       }
       const button = document.createElement('button');
-      button.id = key.code;
+      button.dataset.keyCode = key.code;
       if (key.classes) button.classList = key.classes;
       button.innerHTML = key.isSpecial ? key.name : key[this.language];
 
@@ -41,8 +41,8 @@ export default class {
 
   updateKeys() {
     this.view.querySelectorAll('button')
-      .forEach((btn) => {
-        const data = this.getButtonInfo(btn);
+      .forEach((button) => {
+        const data = this.getButtonInfo(button);
         if (!data.isSpecial) {
           let updated = data[this.language];
 
@@ -53,7 +53,7 @@ export default class {
             updated = data[this.language].toUpperCase();
           }
 
-          document.querySelector(`#${data.code}`).innerHTML = updated;
+          document.querySelector(`[data-key-code="${data.code}"]`).innerHTML = updated;
         }
       });
   }
@@ -81,7 +81,7 @@ export default class {
   }
 
   getButtonInfo(button) {
-    return this.keys.filter((key) => key.code === button.id)[0];
+    return this.keys.filter((key) => key.code === button.dataset.keyCode)[0];
   }
 
   press(code, happening) {
@@ -112,10 +112,10 @@ export default class {
   }
 
   type(button, text) {
-    const btn = this.getButtonInfo(button);
+    const data = this.getButtonInfo(button);
     let updated = text;
-    if (btn.isSpecial) {
-      switch (btn.code) {
+    if (data.isSpecial) {
+      switch (data.code) {
         case 'Backspace':
           updated = updated.slice(0, -1); break;
         case 'Tab':
@@ -128,20 +128,20 @@ export default class {
           updated = text;
       }
     } else if (this.isPressed('Shift')) {
-      updated += btn[`${this.language}Shift`];
+      updated += data[`${this.language}Shift`];
     } else if (this.isPressed('CapsLock')) {
-      updated += btn[this.language].toUpperCase();
+      updated += data[this.language].toUpperCase();
     } else {
-      updated += btn[this.language];
+      updated += data[this.language];
     }
     return updated;
   }
 
   activateKeys() {
-    this.view.querySelectorAll('button').forEach((btn) => {
-      if (!this.isPressed(btn.id)) btn.classList.remove('active');
+    this.view.querySelectorAll('button').forEach((button) => {
+      if (!this.isPressed(button.dataset.keyCode)) button.classList.remove('active');
     });
-    this.pressed.forEach((key) => this.view.querySelector(`#${key}`).classList.add('active'));
-    if (this.capslockPressed) this.view.querySelector('#CapsLock').classList.add('active');
+    this.pressed.forEach((key) => this.view.querySelector(`[data-key-code="${key}"]`).classList.add('active'));
+    if (this.capslockPressed) this.view.querySelector('[data-key-code="CapsLock"]').classList.add('active');
   }
 }

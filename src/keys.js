@@ -1,5 +1,5 @@
 export default [
-  // 1st row
+  /* 1st row */
   {
     code: 'Backquote', en: '§', enShift: '±', ru: 'ё', ruShift: 'Ё', row: 0, place: 0,
   }, {
@@ -30,7 +30,7 @@ export default [
     code: 'Backspace', isSpecial: true, name: 'backspace', classes: 'backspace', row: 0, place: 13,
   },
 
-  // 2nd row
+  /* 2nd row */
   {
     code: 'Tab', isSpecial: true, name: 'tab', classes: 'tab', row: 1, place: 0,
   }, {
@@ -59,7 +59,7 @@ export default [
     code: 'BracketRight', en: ']', enShift: '}', ru: 'ъ', ruShift: 'Ъ', row: 1, place: 12,
   },
 
-  // 3rd row
+  /* 3rd row */
   {
     code: 'CapsLock', isSpecial: true, name: 'capslock', classes: 'capslock', row: 2, place: 0,
   }, {
@@ -90,7 +90,7 @@ export default [
     code: 'Enter', isSpecial: true, name: 'enter', classes: 'enter', row: 2, place: 13,
   },
 
-  // 4th row
+  /* 4th row */
   {
     code: 'ShiftLeft', isSpecial: true, name: 'shift', classes: 'shift shift_left', row: 3, place: 0,
   }, {
@@ -114,12 +114,12 @@ export default [
   }, {
     code: 'Slash', en: '/', enShift: '?', ru: '.', ruShift: ',', row: 3, place: 10,
   }, {
-    code: 'ArrowUp', en: '↑', enShift: '↑', ru: '↑', ruShift: '↑', classes: 'arrow arrow_up', row: 3, place: 11,
+    code: 'ArrowUp', isSpecial: true, name: '↑', classes: 'arrow arrow_up', row: 3, place: 11,
   }, {
     code: 'ShiftRight', isSpecial: true, name: 'shift', classes: 'shift shift_right', row: 3, place: 12,
   },
 
-  // 5th row
+  /* 5th row */
   {
     code: 'ControlLeft', isSpecial: true, name: 'ctrl', classes: 'ctrl ctrl_left', row: 4, place: 0,
   }, {
@@ -131,11 +131,11 @@ export default [
   }, {
     code: 'MetaRight', isSpecial: true, name: 'cmd', classes: 'cmd cmd_right', row: 4, place: 4,
   }, {
-    code: 'ArrowLeft', en: '←', enShift: '←', ru: '←', ruShift: '←', classes: 'arrow arrow_left', row: 4, place: 5,
+    code: 'ArrowLeft', isSpecial: true, name: '←', classes: 'arrow arrow_left', row: 4, place: 5,
   }, {
-    code: 'ArrowDown', en: '↓', enShift: '↓', ru: '↓', ruShift: '↓', classes: 'arrow arrow_down', row: 4, place: 6,
+    code: 'ArrowDown', isSpecial: true, name: '↓', classes: 'arrow arrow_down', row: 4, place: 6,
   }, {
-    code: 'ArrowRight', en: '→', enShift: '→', ru: '→', ruShift: '→', classes: 'arrow arrow_right', row: 4, place: 7,
+    code: 'ArrowRight', isSpecial: true, name: '→', classes: 'arrow arrow_right', row: 4, place: 7,
   }, {
     code: 'AltRight', isSpecial: true, name: 'alt', classes: 'alt alt_right', row: 4, place: 8,
   },

@@ -113,28 +113,98 @@ export default class {
 
   type(button, text) {
     const data = this.getButtonInfo(button);
-    let updated = text;
+
+    const textarea = document.querySelector('.text');
+    let carriagePosition = textarea.selectionStart;
+
+    console.log('typing', carriagePosition);
+
+    let textBeginning = text.slice(0, carriagePosition);
+    const textEnding = text.slice(carriagePosition);
+
+    let typed = '';
     if (data.isSpecial) {
       switch (data.code) {
         case 'Backspace':
-          updated = updated.slice(0, -1); break;
+          textBeginning = textBeginning.slice(0, -1);
+          carriagePosition -= 1;
+          break;
         case 'Tab':
-          updated = `${updated}\t`; break;
+          typed = '\t';
+          carriagePosition += 1;
+          break;
         case 'Enter':
-          updated = `${updated}\n`; break;
+          typed = '\n';
+          carriagePosition += 1;
+          break;
         case 'Space':
-          updated = `${updated} `; break;
+          typed = ' ';
+          carriagePosition += 1;
+          break;
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'ArrowLeft':
+        case 'ArrowRight':
+          this.moveCarriage(data.code);
+          carriagePosition = textarea.selectionStart;
+          break;
         default:
-          updated = text;
+          typed = '';
       }
     } else if (this.isPressed('Shift')) {
-      updated += data[`${this.language}Shift`];
+      typed += data[`${this.language}Shift`];
+      carriagePosition += 1;
     } else if (this.isPressed('CapsLock')) {
-      updated += data[this.language].toUpperCase();
+      typed += data[this.language].toUpperCase();
+      carriagePosition += 1;
     } else {
-      updated += data[this.language];
+      typed += data[this.language];
+      carriagePosition += 1;
     }
-    return updated;
+
+    textarea.value = textBeginning + typed + textEnding;
+
+    textarea.setSelectionRange(carriagePosition, carriagePosition);
+  }
+
+  moveCarriage(keyCode) {
+    const textarea = document.querySelector('.text');
+
+    const goHorizontally = () => {
+      let shifting = textarea.selectionStart;
+      shifting += (keyCode === 'ArrowLeft') ? -1 : 1;
+
+      if (shifting !== -1) {
+        textarea.setSelectionRange(shifting, shifting);
+      }
+    };
+
+    const goVertically = () => {
+      let carriagePosition = textarea.selectionEnd;
+
+      const prevLine = textarea.value.lastIndexOf('\n', carriagePosition);
+      const nextLine = textarea.value.lastIndexOf('\n', carriagePosition + 1);
+      const prevPrevLine = textarea.value.lastIndexOf('\n', prevLine - 1);
+
+      if (nextLine !== -1) {
+        carriagePosition -= (keyCode === 'ArrowUp') ? prevLine : -prevLine;
+        carriagePosition += (keyCode === 'ArrowUp') ? prevPrevLine : nextLine;
+        textarea.setSelectionRange(carriagePosition, carriagePosition);
+      }
+    };
+
+    switch (keyCode) {
+      case 'ArrowLeft':
+      case 'ArrowRight':
+        goHorizontally(); break;
+      case 'ArrowUp':
+      case 'ArrowDown':
+        goVertically(); break;
+      default:
+        throw new Error('something went wrong with arrows\' buttons');
+    }
+
+    return this;
   }
 
   activateKeys() {

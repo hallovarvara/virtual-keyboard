@@ -117,8 +117,6 @@ export default class {
     const textarea = document.querySelector('.text');
     let carriagePosition = textarea.selectionStart;
 
-    console.log('typing', carriagePosition);
-
     let textBeginning = text.slice(0, carriagePosition);
     const textEnding = text.slice(carriagePosition);
 

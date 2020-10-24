@@ -1,0 +1,14 @@
+// Buttons' states
+@mixin volumized($color: black, $v: $volume, $e: $enlarger) {
+  box-shadow: inset 0 0-$v+$e $color,
+              inset 0 0-$v color.adjust($color, $lightness: 40%);
+}
+
+@mixin pressed($color: color.adjust(black, $lightness: -10%), $spread: 10px) {
+  box-shadow: inset 0 0 $spread $color;
+}
+
+// Fonts
+@mixin font($size: 1.6rem, $family: $font-default) {
+  font: $size $family;
+}

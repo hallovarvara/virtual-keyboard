@@ -1,0 +1,134 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 5px 5px 10px;
+  @extend %container;
+  margin-top: 0;
+
+  background-color: $gray;
+  @extend %borderRadius;
+  @include volumized($color: color.adjust($gray, $lightness: -10%));
+}
+
+.keyboard_row {
+  display: flex;
+  flex-wrap: wrap;  
+}
+
+button {
+  flex: 1 0;
+  vertical-align: bottom;
+  display: inline-block;
+  margin: 0.4vw;
+  padding: 1.6vw 2vw 1.8vw;
+
+  min-width: 3vw;
+  min-height: 2vw;
+
+  font-size: 1.2vw;
+  line-height: 1.2vw;
+
+  background-color: $dark;
+  color: $light;
+  border: none;
+  outline: none;
+  @extend %borderRadius;
+  @include volumized();
+
+  cursor: pointer;
+  @extend %transition;
+
+  &:hover {
+    background-color: color.adjust($dark, $lightness: 8%);
+  }
+
+  &.active {
+    @include pressed();
+    background-color: color.adjust(black, $lightness: 20%);
+    color: color.adjust(black, $lightness: 40%);
+  }
+}
+
+.tab,
+.backspace,
+.del,
+.shift,
+.capslock,
+.enter,
+.space,
+.ctrl,
+.opt,
+.cmd {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-transform: lowercase;
+  letter-spacing: 0.05vw;
+}
+
+.enter,
+.del,
+.backspace {
+  text-align: right;
+}
+
+.tab,
+.shift_left,
+.capslock {
+  text-align: left;
+}
+
+.arrow {flex-grow: 0.5}
+.ctrl, .cmd, .alt {flex-grow: 2}
+.tab, .del {flex-grow: 3}
+.backspace {flex-grow: 6}
+.capslock {flex-grow: 7}
+.enter {flex-grow: 8}
+.shift {flex-grow: 9}
+.shift_right {flex-grow: 10.5}
+.space {flex-grow: 25}
+
+.shift,
+.ctrl {
+  &_right { text-align: right; }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .keyboard {
+    width: $container-max-width;
+
+    border-radius: $max-borderRadius;
+    @include volumized(color.adjust($gray, $lightness: -10%), $max-volume, $max-enlarger);
+  }
+
+  button {
+    margin: 4px;
+    padding: 16px 21px 18px;
+  
+    min-width: unset;
+    min-height: unset;
+  
+    font-size: 12px;
+    line-height: 12px;
+
+    border-radius: $max-borderRadius;
+    @include volumized($v: $max-volume, $e: $max-enlarger);
+  }
+
+  .tab,
+  .backspace,
+  .del,
+  .shift,
+  .capslock,
+  .enter,
+  .space,
+  .ctrl,
+  .opt,
+  .cmd {
+    padding-left: 10px;
+    padding-right: 10px;
+    letter-spacing: 0.05rem;
+  }
+
+  .shift_right { flex-grow: 11.9; }
+}

@@ -1,0 +1,27 @@
+.text {
+  display: block;
+  padding: 15px;
+  @extend %container;
+  height: 200px;
+
+  @include font($size: 2.2rem, $family: $font-textarea);
+  
+  background-color: white;
+  @extend %borderRadius;
+  border: 5px solid $textarea-border;
+
+  resize: none;
+
+  &,
+  &:focus {
+    outline: none;
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .text {
+    max-width: $container-max-width;
+
+    border-radius: $max-borderRadius;
+  }
+}
